@@ -13,39 +13,37 @@ const mostrarServicios = (data) =>{
                                 <button class="btn-eliminar" style= "cursor: pointer;border: 1px solid #47cfac;padding: 23px 15px" id='${servicio.id}'>Eliminar</button>                                
                                 </div>
                                 `;  
-    contenedorServicios.appendChild(cardService);
-    }) 
-const eliminar = contenedorServicios.querySelector('.btn-eliminar');
+contenedorServicios.appendChild(cardService);
+const eliminar = document.getElementById(`${servicio.id}`);
 eliminar.addEventListener('click', (e) => {
 eliminarDelCarrito(e.target.id)
-console.log("hola");
 });
+    ////*****total del carrito */
+    const total = carrito.reduce((acc,el) => acc + el.precio, 0);
+    const totalBuying = document.querySelector("#total-carrito");
+    totalBuying.innerHTML =  `TOTAL A PAGAR: $${total} `;
+    contenedorServicios.appendChild(totalBuying);
+    }) 
+
   } 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 mostrarServicios(carrito);
-    ////*****total del carrito */
-const total = carrito.reduce((acc,el) => acc + el.precio, 0);
-const totalBuying = document.querySelector("#total-carrito");
-totalBuying.innerHTML =  `TOTAL A PAGAR: $${total} `;
-contenedorServicios.appendChild(totalBuying);
-
-
-
- //localStorage.clear();
-  ///////GuardarLS///////////
+    
+   ///////GuardarLS///////////
   function guardarLS(elemento){
     return localStorage.setItem('carrito', JSON.stringify(elemento))
   }
 ///////////////eliminar Servicios//////////////
   const eliminarDelCarrito = (id) =>{
-    const foundId = carrito.find(serv => serv.id ===id);
+    const foundId = carrito.find(serv => serv.id ==id);
     console.log(foundId);
     carrito = carrito.filter(carritoId => {
       return carritoId !==foundId;
     });
     guardarLS(carrito);      
     mostrarServicios(carrito);
-     };
+    };
+
 
 
 
